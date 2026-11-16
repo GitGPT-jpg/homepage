@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>江尘 · 一束光，从智利到北京</title>
+<meta name="description" content="江尘的个人主页。我做面向真实工程任务的智能体。地图上的一束光从智利到北京，点开两端，看我在那里做的事。">
+<meta name="theme-color" content="#04070d">
+<meta property="og:title" content="江尘 · 一束光，从智利到北京">
+<meta property="og:description" content="我做面向真实工程任务的智能体。点开光束的两端，看我在智利和北京做的事。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2304070d'/%3E%3Cpath d='M25 24C23 11 15 7 7 11' fill='none' stroke='%23e9eff8' stroke-width='1.6'/%3E%3Ccircle cx='25' cy='24' r='3.2' fill='%23ffb347'/%3E%3Ccircle cx='7' cy='11' r='3.2' fill='%235fe1ff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/site.css?v=sat1">
+<script>
+(function (d) {
+  // 够宽够高就整屏铺地图；否则地图在上、内容在下
+  window.ZT_MODE = function () { var w = innerWidth, h = innerHeight; return w >= 900 && h >= 560 && w / h >= 1.15 ? 'wide' : 'stack'; };
+  d.className = 'js';
+  d.dataset.mode = window.ZT_MODE();
+})(document.documentElement);
+</script>
+</head>
+<body>
+
+<!-- 地图：底层点阵陆地，上层光束；标签是真正的按钮 -->
+<div class="stage" id="stage">
+  <canvas id="map-base" aria-hidden="true"></canvas>
+  <canvas id="map-fx" aria-hidden="true"></canvas>
+  <div class="labels" id="labels">
+    <button class="chip chip-cl" id="chip-chile" type="button" data-go="chile">
+      <span class="chip-k">智利 <i>CHILE</i></span>
+      <span class="chip-s">通信设备 · 外派</span>
+      <span class="chip-t">设备升级 Agent Harness</span>
+      <span class="chip-go">点击进入 <b aria-hidden="true">→</b></span>
+    </button>
+    <button class="chip chip-bj" id="chip-beijing" type="button" data-go="beijing">
+      <span class="chip-k">北京 <i>BEIJING</i></span>
+      <span class="chip-s">大模型推理 · 研发</span>
+      <span class="chip-t">排障智能体「北辰」</span>
+      <span class="chip-t">推理研发工作台</span>
+      <span class="chip-go">点击进入 <b aria-hidden="true">→</b></span>
+    </button>
+    <span class="beam-tag" id="beam-tag" aria-hidden="true"></span>
+  </div>
+</div>
+
+<header class="top">
+  <a class="brand" href="#" id="brand" aria-label="江尘 · 回到全景">
+    <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M26 25C24 11 15 6 6 10" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="26" cy="25" r="3.2" fill="#ffb347"/><circle cx="6" cy="10" r="3.2" fill="#5fe1ff"/></svg>
+    <b>江尘</b><span>JIANG CHEN</span>
+  </a>
+  <a class="back" href="#" id="back"><span aria-hidden="true">←</span> 全景</a>
+  <p class="clocks" id="clocks" aria-label="两地此刻的时间">
+    <span class="clock clock-cl">智利 <b id="t-cl">--:--:--</b><em id="d-cl"></em></span>
+    <span class="clock clock-bj">北京 <b id="t-bj">--:--:--</b><em id="d-bj"></em></span>
+    <span class="gap" id="t-gap"></span>
+  </p>
+  <a class="gh" href="https://github.com/GitGPT-jpg" rel="me noopener">GitHub <span aria-hidden="true">↗</span></a>
+</header>
+
+<main>
+
+<section class="intro" id="intro" aria-labelledby="name">
+  <p class="kicker">智能体 · 工程</p>
+  <h1 id="name">江尘</h1>
+  <p class="lead">我做面向真实工程任务的智能体。</p>
+  <p class="bio">工作横跨通信设备运维与大模型推理系统：先在智利做通信设备交付，现在在中国北京做大模型推理系统的研发。</p>
+  <p class="kicker q-k">我关心三个具体问题</p>
+  <ol class="qs">
+    <li><a href="#harness" data-site="chile"><span>模型提出的动作，在什么条件下可以执行？</span><em>智利</em></a></li>
+    <li><a href="#xiaobei" data-site="beijing"><span>多个故障能产生相同症状时，系统凭什么确认根因？</span><em>北京</em></a></li>
+    <li><a href="#evolve" data-site="beijing"><span>智能体从一次复盘中学到的经验，怎样证明对下一次任务也有用？</span><em>北京</em></a></li>
+  </ol>
+  <noscript><p class="bio">地图和演练台需要 JavaScript；下面的文字可以照常阅读。</p></noscript>
+</section>
+
+<!-- ============ 智利 ============ -->
+<article class="site site-cl" id="chile" aria-labelledby="chile-h" tabindex="-1">
+  <header class="site-bar">
+    <p class="site-loc"><i aria-hidden="true"></i><b>智利</b><span>圣地亚哥 · 33.45°S 70.67°W</span></p>
+    <p class="site-time">当地 <b id="p-t-cl">--:--</b><em id="p-d-cl"></em></p>
+    <a class="site-x" href="#" aria-label="关闭，回到全景">×</a>
+  </header>
+  <div class="site-body">
+    <p class="kicker">外派智利 · 光网络交付</p>
+    <h2 id="chile-h">通信设备升级 Agent Harness <span class="ver">v0.2 原型</span></h2>
+    <p class="first">在智利做光网络交付、守夜间维护窗口的那段时间，我抽象出了第一个代表项目。</p>
+    <p>设备升级有相对稳定的操作链：预检、上传、安装和验证。真正需要工程判断的时刻，往往发生在标准流程出现偏差之后。安装失败时，工程师要结合设备状态、业务影响和剩余窗口决定下一步。</p>
+    <p class="pull">先前对启动升级的批准，并不自动包含回滚授权。</p>
+    <p>基于这一点，我把自然语言交互、动作决策和设备执行拆开设计。OpenClaw Agent 负责理解升级目标、查询状态和提出动作；所有执行请求经过类型化工具进入 Python 状态机，由状态机校验前置条件、任务状态及对应授权，再交给设备适配器执行。</p>
+
+    <section class="rig" id="harness" aria-labelledby="harness-h">
+      <header class="rig-h">
+        <p class="rig-q">模型提出的动作，在什么条件下可以执行？</p>
+        <h3 id="harness-h">值一次夜班：你来当批准人</h3>
+        <p class="rig-note">浏览器里按同一套规则重做的演练 · 设备是 Mock · 数据为合成</p>
+      </header>
+      <div class="rig-app" id="harness-app"></div>
+    </section>
+
+    <h3 class="sub">三样东西，分开存放</h3>
+    <p>这套 Harness 中，我把会话上下文、任务状态和执行证据分别处理。SQLite 保存任务当前所处的状态，<code>request_id</code> 用于保证重复建单请求的幂等性，追加式 JSONL 事件流记录工具调用、执行结果、人工批准和异常。这样，即使对话上下文被裁剪，系统仍然可以从持久记录回答“设备走到了哪一步”“谁批准了哪个动作”。</p>
+    <p>我在 v0.2 原型中接入 OpenClaw，通过 Mock 设备适配器注入安装和验证故障，检验单设备流程能否在正确的位置停下、等待独立的回滚授权，并留下可回放的执行轨迹。上面这台演练机做的是同一件事。</p>
+
+    <p class="site-next"><a href="#beijing" data-ride>沿着这束光，去北京 <span aria-hidden="true">→</span></a></p>
+  </div>
+</article>
+
+<!-- ============ 北京 ============ -->
+<article class="site site-bj" id="beijing" aria-labelledby="beijing-h" tabindex="-1">
+  <header class="site-bar">
+    <p class="site-loc"><i aria-hidden="true"></i><b>北京</b><span>39.90°N 116.41°E</span></p>
+    <p class="site-time">当地 <b id="p-t-bj">--:--</b><em id="p-d-bj"></em></p>
+    <a class="site-x" href="#" aria-label="关闭，回到全景">×</a>
+    <nav class="site-nav" aria-label="北京的三件事">
+      <a href="#xiaobei">北辰 · 诊断</a>
+      <a href="#evolve">北辰 · 自进化</a>
+      <a href="#workbench">推理研发工作台</a>
+    </nav>
+  </header>
+  <div class="site-body">
+    <p class="kicker">北京 · 大模型推理</p>
+    <h2 id="beijing-h">自进化排障智能体「北辰」</h2>
+    <p class="first">来到北京后，我开发了面向 Prefill/Decode 分离推理引擎的自进化排障智能体「北辰」。</p>
+    <p>这个场景的难点是故障症状高度共性。<code>detokenizer</code> 心跳停止、就绪探针返回 503，可能同时出现在内存耗尽、MoE 专家并行组重配置、RDMA 资源耗尽或 KV 传输异常等事件中。</p>
+    <figure class="fan" id="fan-app"></figure>
+
+    <p>我把系统职责划分为主理人、诊断专家和复盘专家。</p>
+    <ol class="roles" aria-label="北辰的三个角色">
+      <li><b>主理人</b><span>处理每轮入口与任务路由</span></li>
+      <li><b>诊断专家</b><span>按故障域并行调用取证工具</span>
+        <ul><li>日志</li><li>服务指标</li><li>节点指标</li><li>Pod 生命周期</li><li>单请求轨迹</li><li>对应版本源码</li></ul>
+      </li>
+      <li><b>复盘专家</b><span>用户确认诊断结束后，登记真实根因与反馈</span></li>
+    </ol>
+    <p class="packet"><i>角色之间传递的是</i><span>目标实例</span><span>时间窗</span><span>证据来源</span><span>取数状态</span><span>待验证假设</span></p>
+    <p>这样，后续判断能追溯到具体观测。</p>
+
+    <section class="rig" id="xiaobei" aria-labelledby="xiaobei-h">
+      <header class="rig-h">
+        <p class="rig-q">多个故障能产生相同症状时，系统凭什么确认根因？</p>
+        <h3 id="xiaobei-h">证据门禁：证据到哪一步，结论就说到哪一步</h3>
+        <p class="rig-note">北辰的核心设计，是把每类根因需要满足的证据条件写成可执行的门禁。排查 EP 组故障，要联合核对 worker 心跳、缩容或重配置事件以及请求路由变化；怀疑 RDMA 队列对（QP）耗尽，则要完成相关排除检查，并取得故障节点的 QP 实测。</p>
+      </header>
+      <div class="rig-app" id="gate-app"></div>
+    </section>
+    <p>若节点查询超时，报告仍可确认“该实例未通过就绪检查”，但对“QP 耗尽”的判断最多到“疑似”。我把这种确定性落实到每一条结论上：同一份结构化证据先生成供值班人员阅读的九行简报，再渲染附有证据、未决项和验证方法的完整报告。</p>
+
+    <h3 class="sub">慢在哪一段</h3>
+    <p>我也为取证过程加入分段打点，按时间区间并集计算并行工具的实际占用，以区分数据源慢、模型耗时和编排往返过多这几类不同的优化问题。</p>
+    <figure class="trace" id="trace-app"></figure>
+
+    <section class="rig" id="evolve" aria-labelledby="evolve-h">
+      <header class="rig-h">
+        <p class="rig-q">智能体从一次复盘中学到的经验，怎样证明对下一次任务也有用？</p>
+        <h3 id="evolve-h">自进化：一次技能修改，是一个待检验的候选假设</h3>
+        <p class="rig-note">用户纠错、真实根因和诊断复盘可以进入优化队列，进化器据此提出 Skill 补丁。候选先经过修改范围、语法和 diff 审查，再与旧版在同一批冻结取证包上回放，按参考答案比较故障命中、误报，以及证据缺失时能否正确给出“未知”。候选的开发集主指标必须严格优于基线，并经人工确认后才能采纳。</p>
+      </header>
+      <div class="rig-app" id="evolve-app"></div>
+    </section>
+    <p>做离线评测时，我曾发现一批样本的任务描述泄漏了故障类别，于是将那轮对比判为无效，把类别标签留在评分侧，再按案例族切分数据集。这直接影响我能否回答一个关键问题：分数提高，究竟来自诊断策略改进，还是因为题面已经暗示了答案？</p>
+
+    <section class="rig" id="workbench" aria-labelledby="workbench-h">
+      <header class="rig-h">
+        <p class="rig-q rig-now">正在开发</p>
+        <h3 id="workbench-h">基于 AI 编程助手的推理研发工作台插件</h3>
+        <p class="rig-note">把这些经验用于需要多轮修改和实验的研发任务。Agent 根据目标组织实验，CLI 管理任务状态和轮次，独立验收器根据真实退出码、主指标、阈值及硬约束判定结果。</p>
+      </header>
+      <div class="rig-app" id="bench-app"></div>
+    </section>
+    <p>压测正常退出但缺少主指标时，本轮进入 <code>blocked</code>，记录需要补采的证据；数据有效但未达标时，失败原因进入下一轮。每份结果还绑定执行批次和轮次标识，防止任务重开后，旧执行的迟到结果覆盖当前结论。</p>
+    <p class="pull">沿着这条方向，我希望进一步量化 Agent 自身的工程收益：增加一次取证、一次模型调用或一轮复盘，究竟纠正了多少误判，又让工程师多等了多久。</p>
+
+    <p class="site-next"><a href="#chile" data-ride><span aria-hidden="true">←</span> 逆着这束光，回智利</a></p>
+  </div>
+</article>
+
+</main>
+
+<footer class="foot" id="foot">
+  <p class="route"><a href="#chile">智利</a><i aria-hidden="true">→</i><a href="#beijing">北京</a></p>
+  <p class="meta"><span id="beam-meta">圣地亚哥 → 北京 · 大圆航线</span><span>地图的明暗是此刻的昼夜</span></p>
+</footer>
+
+<!-- 开场动画：圣地亚哥 → 转向北京 → 虚化成点阵 → 展开成点状地图 → 点亮智利 → 光束连到北京 → 名片浮现 -->
+<div class="opening" id="opening">
+  <div class="orbit-shot" aria-hidden="true">
+    <canvas class="orbit-gl"></canvas>
+    <canvas class="orbit-dots"></canvas>
+    <div class="orbit-disc">
+      <img class="orbit-poster" alt="" width="4096" height="4096" decoding="async" fetchpriority="high">
+    </div>
+    <div class="orbit-caption orbit-caption-bj" lang="zh-CN">
+      <span>39°54′ N &nbsp; 116°24′ E</span>
+      <strong>中国 · 北京</strong>
+      <small lang="en">Beijing</small>
+    </div>
+    <div class="orbit-caption orbit-caption-scl" lang="zh-CN">
+      <span>33°27′ S &nbsp; 70°40′ W</span>
+      <strong>智利 · 圣地亚哥</strong>
+      <small lang="es">Santiago de Chile</small>
+    </div>
+    <small class="orbit-credit">NASA / Blue Marble</small>
+  </div>
+  <button type="button" class="opening-skip" id="opening-skip">跳过动画 <span aria-hidden="true">→</span></button>
+</div>
+
+<script src="assets/core.js?v=sat1"></script>
+<script src="assets/land.js?v=sat1"></script>
+<script src="assets/map.js?v=sat1"></script>
+<script src="assets/app.js?v=sat1"></script>
+<script src="assets/globe.js?v=sat1"></script>
+<script src="assets/opening.js?v=sat1"></script>
+</body>
+</html>
